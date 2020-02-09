@@ -1,0 +1,66 @@
+﻿@model Bloodhound.Core.Model.OffenderGeoFence
+
+@{
+    ViewData["Title"] = "Edit GeoFence";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Offender offender = (Offender)ViewData["Offender"];
+    List<SelectListItem> geoFenceTypes = (List<SelectListItem>)ViewData["GeoFenceTypeId"];
+}
+
+<p>
+    <a asp-action="Index" asp-controller="Home">Dashboard</a>
+    &gt;
+    <a asp-action="Index" asp-controller="Offenders">Offenders</a>
+    &gt;
+    <a asp-action="Details" asp-controller="Offenders" asp-route-id="@offender.OffenderId">@offender.OffenderName</a>
+    &gt;
+    <a asp-action="Index" asp-controller="GeoFences" asp-route-id="@offender.OffenderId">GeoFences</a>
+    &gt;
+    @ViewData["Title"]
+</p>
+<hr />
+
+<div class="mdc-layout-grid">
+    <div class="mdc-layout-grid__inner">
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
+            <form asp-action="Edit" class="material-form" autocomplete="off">
+                <input type="hidden" asp-for="OffenderId" />
+                <input type="hidden" asp-for="OffenderGeoFenceId" />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="material-group">
+                    @Html.MaterialTextBoxFor(x => x.GeoFenceName)
+                    @Html.ValidationMessageFor(x => x.GeoFenceName)
+                </div>
+                <div class="material-group">
+                    @Html.MaterialDropdownListFor(x => x.GeoFenceTypeId, geoFenceTypes)
+                    @Html.ValidationMessageFor(x => x.GeoFenceTypeId)
+                </div>
+                <div class="material-group">
+                    @Html.MaterialTextBoxFor(x => x.Address)
+                    @Html.ValidationMessageFor(x => x.Address)
+                </div>
+                <div class="material-group">
+                    @Html.MaterialTextBoxFor(x => x.NorthEastLatitude)
+                    @Html.ValidationMessageFor(x => x.NorthEastLatitude)
+                </div>
+                <div class="material-group">
+                    @Html.MaterialTextBoxFor(x => x.NorthEastLongitude)
+                    @Html.ValidationMessageFor(x => x.NorthEastLongitude)
+                </div>
+                <div class="material-group">
+                    @Html.MaterialTextBoxFor(x => x.SouthWestLatitude)
+                    @Html.ValidationMessageFor(x => x.SouthWestLatitude)
+                </div>
+                <div class="material-group">
+                    @Html.MaterialTextBoxFor(x => x.SouthWestLongitude)
+                    @Html.ValidationMessageFor(x => x.SouthWestLongitude)
+                </div>
+                <div class="material-group">
+                    <button type="submit" class="mdc-button mdc-button--raised">
+                        <span class="mdc-button__label">Save GeoFence</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

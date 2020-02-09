@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Bloodhound.Core.Model.Offender>
+
+@{
+    ViewData["Title"] = "Offenders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p>
+    <a asp-action="Index" asp-controller="Home">Dashboard</a>
+    &gt;
+    @ViewData["Title"]
+</p>
+<hr />
+
+<div class="mdc-data-table">
+    <table class="mdc-data-table__table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.OffenderName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OffenderSummary)
+                </th>
+                <th><a asp-action="Create">Add New</a></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OffenderName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OffenderSummary)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.OffenderId">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.OffenderId">Details</a> |
+                        <a asp-action="Index" asp-controller="GeoFences" asp-route-id="@item.OffenderId">GeoFences</a> |
+                        <a asp-action="Delete" asp-route-id="@item.OffenderId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

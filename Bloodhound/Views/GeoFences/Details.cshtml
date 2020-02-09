@@ -1,0 +1,69 @@
+﻿@model Bloodhound.Core.Model.OffenderGeoFence
+
+@{
+    ViewData["Title"] = "GeoFence Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<p>
+    <a asp-action="Index" asp-controller="Home">Dashboard</a>
+    &gt;
+    <a asp-action="Index" asp-controller="Offenders">Offenders</a>
+    &gt;
+    <a asp-action="Details" asp-controller="Offenders" asp-route-id="@Model.Offender.OffenderId">@Model.Offender.OffenderName</a>
+    &gt;
+    <a asp-action="Index" asp-controller="GeoFences" asp-route-id="@Model.Offender.OffenderId">GeoFences</a>
+    &gt;
+    @ViewData["Title"]
+</p>
+<hr />
+
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.Offender)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Offender.OffenderName)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.GeoFenceName)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.GeoFenceName)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Address)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Address)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.GeoFenceType.GeoFenceTypeName)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.GeoFenceType.GeoFenceTypeName)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.NorthEastLatitude)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.NorthEastLatitude)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.NorthEastLongitude)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.NorthEastLongitude)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.SouthWestLatitude)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.SouthWestLatitude)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.SouthWestLongitude)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.SouthWestLongitude)
+    </dd>
+</dl>

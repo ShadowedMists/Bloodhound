@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Bloodhound";
+}
+
+<style type="text/css">
+    .article {
+        max-width: unset
+    }
+</style>
+
+<link rel="stylesheet" href="~/lib//leaflet/leaflet.css" />
+<script src="~/lib/leaflet/leaflet.js"></script>
+<div id="map" style="height:320px;display:block"></div>
+
+<script type="text/javascript">
+
+    updateMapSize()
+    window.addEventListener('resize', updateMapSize)
+
+    var offenders = @Html.Raw((string)ViewData["LastLocations"]);
+
+    var points = []
+    var markers = []
+    for (var i = 0; i < offenders.length; i++) {
+        var o = offenders[i] 
+        points[i] = L.LatLng(o.Latitude, o.Longitude)
+
+        var marker = L.marker([o.Latitude, o.Longitude])
+        marker.bindPopup('<a href="/Offenders/Details/' + o.OffenderId + '">' + o.OffenderName + '</a><br />' + o.Latitude + ', ' + o.Longitude + '<br/>' + o.LocationTime)
+        markers[i] = marker
+    }
+
+    var bounds = L.latLngBounds(points)
+
+    // add the OpenStreetMap tiles
+    var map = L.map('map').setView({lat: 42.47209690919285, lng: -93.69140625}, 5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+    }).addTo(map);
+
+
+    // show the scale bar on the lower left corner
+    L.control.scale().addTo(map);
+
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].addTo(map)
+    }
+
+    function updateMapSize() {
+        var expandableHeight = window.innerHeight - document.getElementById('app-bar').offsetHeight
+        document.getElementById('map').style.height = expandableHeight + 'px'
+    }
+
+</script>

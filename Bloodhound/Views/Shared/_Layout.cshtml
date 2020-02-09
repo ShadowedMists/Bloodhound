@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Bloodhound</title>
+
+    <link rel="stylesheet" href="~/lib/material/css/material-components-web.min.css" />
+    <link rel="stylesheet" href="~/lib/material-design-icons/material-icons.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+</head>
+<body class="mdc-typography">
+    <div id="root">
+        <div class="drawer-frame-root">
+            <aside class="mdc-drawer mdc-drawer--modal">
+                <div class="mdc-drawer__content">
+                    <div class="mdc-list">
+                        <a class="mdc-list-item mdc-list-item--activated" asp-action="Index" asp-controller="Home">
+                            <i class="material-icons mdc-list-item__graphic" aria-hidden="true">home</i>
+                            <span class="mdc-list-item__text">Dashboard</span>
+                        </a>
+                        <a class="mdc-list-item" asp-action="Index" asp-controller="Offenders">
+                            <i class="material-icons mdc-list-item__graphic" aria-hidden="true">directions_run</i>
+                            <span class="mdc-list-item__text">Offenders</span>
+                        </a>
+                    </div>
+                </div>
+            </aside>
+            <div class="mdc-drawer-scrim"></div>
+            <div class="drawer-frame-app-content">
+                <header class="mdc-top-app-bar drawer-top-app-bar" id="app-bar">
+                    <div class="mdc-top-app-bar__row">
+                        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                            <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button">menu</button>
+                            <span class="mdc-top-app-bar__title">@ViewData["Title"]</span>
+                        </section>
+                        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
+                            <!--
+                        <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Download">file_download</button>
+                        <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Print this page">print</button>
+                        <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Bookmark this page">bookmark</button>
+                            -->
+                        </section>
+                    </div>
+                </header>
+                <div class="drawer-main-content">
+                    <div class="mdc-top-app-bar--fixed-adjust">
+                    </div>
+                    <main class="main-content" id="main-content">
+                        <div class="article">
+                            <a id="article" name="article" class="sr-only">Page Contents</a>
+                            @RenderBody()
+                        </div>
+                    </main>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/material/js/material-components-web.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @RenderSection("Scripts", required: false)
+
+    <script type="text/javascript">
+
+        window.mdc.autoInit();
+        const drawer = new mdc.drawer.MDCDrawer(document.querySelector('.mdc-drawer'))
+        const topAppBar = new mdc.topAppBar.MDCTopAppBar(document.getElementById('app-bar'))
+        const mainContentEl = document.getElementById('main-content')
+        topAppBar.setScrollTarget(mainContentEl)
+
+        topAppBar.listen('MDCTopAppBar:nav', () => {
+          drawer.open = !drawer.open
+        })
+
+        const listEl = document.querySelector('.mdc-drawer .mdc-list')
+
+        listEl.addEventListener('click', (event) => {
+          drawer.open = false
+        })
+
+        document.body.addEventListener('MDCDrawer:closed', () => {
+            document.getElementById('article').focus()
+        })
+
+
+    </script>
+
+</body>
+</html>

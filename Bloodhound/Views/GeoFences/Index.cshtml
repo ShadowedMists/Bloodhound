@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Bloodhound.Core.Model.OffenderGeoFence>
+
+@{
+    ViewData["Title"] = "GeoFences";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Offender offender = (Offender)ViewData["Offender"];
+}
+
+<p>
+    <a asp-action="Index" asp-controller="Home">Dashboard</a>
+    &gt;
+    <a asp-action="Index" asp-controller="Offenders">Offenders</a>
+    &gt;
+    <a asp-action="Details" asp-controller="Offenders" asp-route-id="@offender.OffenderId">@offender.OffenderName</a>
+    &gt;
+    @ViewData["Title"]
+</p>
+<hr />
+<div class="mdc-data-table">
+    <table class="mdc-data-table__table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.GeoFenceName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
+                <th>
+                    Type
+                </th>
+                <th>
+                    Location
+                </th>
+                <th>
+                    <a asp-action="Create" asp-route-id="@offender.OffenderId">Create New</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GeoFenceName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GeoFenceType.GeoFenceTypeName)
+                </td>
+                <td>
+                    <div>NE: @Html.DisplayFor(modelItem => item.NorthEastLatitude), @Html.DisplayFor(modelItem => item.NorthEastLongitude)</div>
+                    <div>SW: @Html.DisplayFor(modelItem => item.SouthWestLatitude), @Html.DisplayFor(modelItem => item.SouthWestLongitude)</div>
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.OffenderGeoFenceId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.OffenderGeoFenceId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.OffenderGeoFenceId">Delete</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

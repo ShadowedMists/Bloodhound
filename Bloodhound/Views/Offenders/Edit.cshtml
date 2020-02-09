@@ -1,0 +1,42 @@
+﻿@model Bloodhound.Core.Model.Offender
+
+@{
+    ViewData["Title"] = "Edit Offender";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p>
+    <a asp-action="Index" asp-controller="Home">Dashboard</a>
+    &gt;
+    <a asp-action="Index" asp-controller="Offenders">Offenders</a>
+    &gt;
+    @ViewData["Title"]
+</p>
+<hr />
+<div class="mdc-layout-grid">
+    <div class="mdc-layout-grid__inner">
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
+
+            <form asp-action="Edit" class="material-form"  autocomplete="off">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="OffenderId" />
+                <div class="material-group">
+                    @Html.MaterialTextBoxFor(x => x.OffenderName)
+                    @Html.ValidationMessageFor(x => x.OffenderName)
+                </div>
+
+                <div class="material-group">
+                    @Html.MaterialTextBoxFor(x => x.OffenderSummary)
+                    @Html.ValidationMessageFor(x => x.OffenderSummary)
+                </div>
+
+                <div class="material-group">
+                    <button type="submit" class="mdc-button mdc-button--raised">
+                        <span class="mdc-button__label">Save Offender</span>
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

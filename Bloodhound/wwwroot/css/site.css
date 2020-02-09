@@ -1,0 +1,56 @@
+﻿html, body {
+    margin: 0;
+    padding: 0;
+}
+
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url(../lib/material-design-icons/MaterialIcons-Regular.eot); /* For IE6-8 */
+    src: local('Material Icons'), local('MaterialIcons-Regular'), url(../lib/material-design-icons/MaterialIcons-Regular.woff2) format('woff2'), url(../lib/material-design-icons/MaterialIcons-Regular.woff) format('woff'), url(../lib/material-design-icons/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+.article {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.material-form .material-group {
+    margin-bottom: 1rem;
+    width:500px;
+}
+
+.material-form .mdc-text-field, .material-form .mdc-button, .mdc-data-table, .mdc-select, .mdc-select__anchor, mdc-select__menu, .mdc-menu-surface {
+    width: 100%
+}
+
+.sr-only {
+    border: 0 !important;
+    clip: rect(1px, 1px, 1px, 1px) !important;
+    -webkit-clip-path: inset(50%) !important;
+    clip-path: inset(50%) !important;
+    height: 1px !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    position: absolute !important;
+    width: 1px !important;
+    white-space: nowrap !important;
+}
+
+.sr-only-focusable:focus,
+.sr-only-focusable:active {
+    clip: auto !important;
+    -webkit-clip-path: none !important;
+    clip-path: none !important;
+    height: auto !important;
+    margin: auto !important;
+    overflow: visible !important;
+    width: auto !important;
+    white-space: normal !important;
+}
+
+.mdc-drawer{
+    z-index:1001;
+}

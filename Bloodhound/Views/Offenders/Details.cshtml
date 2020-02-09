@@ -1,0 +1,131 @@
+﻿@model Bloodhound.Models.OffenderDetailModel
+
+@{
+    ViewData["Title"] = "Offender Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/lib//leaflet/leaflet.css" />
+<script src="~/lib/leaflet/leaflet.js"></script>
+
+<p>
+    <a asp-action="Index" asp-controller="Home">Dashboard</a>
+    &gt;
+    <a asp-action="Index" asp-controller="Offenders">Offenders</a>
+    &gt;
+    @ViewData["Title"]
+</p>
+<hr />
+
+<div>
+    <h4>Offender Information <small>[<a asp-action="Edit" asp-route-id="@Model.Offender.OffenderId">Edit</a>] [<a asp-action="Index" asp-controller="GeoFences" asp-route-id="@Model.Offender.OffenderId">GeoFences</a>]</small></h4>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Offender.OffenderName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Offender.OffenderName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Offender.OffenderSummary)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Offender.OffenderSummary)
+        </dd>
+    </dl>
+</div>
+
+<h4>Current Location</h4>
+<div id="map" style="height:320px;display:block"></div>
+
+@*<h4>Recent Events</@*h4>
+<div class="mdc-data-table">
+    <table class="mdc-data-table__table">
+        <thead>
+            <tr>
+                <th>
+                    Event Type
+                </th>
+                <th>
+                    GeoFence
+                </th>
+                <th>
+                    GeoFence Address
+                </th>
+                <th>
+                    Time
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Events)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EventType.EventTypeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OffenderGeoFence.GeoFenceName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OffenderGeoFence.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedOn)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>*@
+
+
+<script type="text/javascript">
+
+    // add the OpenStreetMap tiles
+    var map = L.map('map').setView({lat: @Model.GetMapCenterLatitude(), lng: @Model.GetMapCenterLongitude() }, 14);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+    }).addTo(map);
+
+    // show the scale bar on the lower left corner
+    L.control.scale().addTo(map);
+
+    @if(Model.LastLocation != null)
+    {
+        <text>
+
+    var marker = L.marker([@Model.GetMapCenterLatitude(), @Model.GetMapCenterLongitude()])
+    marker.bindPopup('@Model.Offender.OffenderName<br />@Model.LastLocation.Latitude, @Model.LastLocation.Longitude<br>@Model.LastLocation.LocationTime')
+    marker.addTo(map)
+
+        </text>
+    }
+
+    @if(Model.GeoFences != null && Model.GeoFences.Count() > 0)
+    {
+        foreach(OffenderGeoFence fence in Model.GeoFences)
+        {
+            <text>
+
+    drawGeoFence('@fence.GeoFenceName', @fence.GeoFenceTypeId, @fence.NorthEastLatitude, @fence.NorthEastLongitude, @fence.SouthWestLatitude, @fence.SouthWestLongitude)
+
+            </text>
+        }
+    }
+
+    function drawGeoFence(name, type, neLat, neLng, swLat, swLng) {
+        var p = L.polygon([
+            [neLat, neLng],
+            [neLat, swLng],
+            [swLat, swLng],
+            [swLat, neLng]
+            ], {
+                color: type === 1 ? 'green' : 'red'
+        })
+        p.bindPopup(name)
+        p.addTo(map)
+    }
+
+</script>
